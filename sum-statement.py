@@ -10,10 +10,6 @@
 # EXAMPLE
 #   python sum-statement.py 01-01-2013.txt
 #
-# TODO
-#   Parse and export text file as JSON
-#	Represent currency using integers NOT floats
-#
 
 import sys
 import re
@@ -24,12 +20,14 @@ def sum_statement(fn):
 
     sum = 0
 
+    # TODO(PM): Parse and export text file as JSON
     with open(fn,'r') as f:
         data = f.read()
     
     # Value between a "$" and "|"
     for value in re.findall('\$(.*?)\|', data):
         value = value.replace(",", "")  # Remove comma
+        # TODO(PM): Represent currency using integers NOT floats
         if value[0] != "-": # If positive value
             sum+=float(value)
         else:   # Handle negative value
@@ -37,6 +35,7 @@ def sum_statement(fn):
 
     return sum
 
-locale.setlocale(locale.LC_ALL, '')
-# Print the sum of the transaction amounts in the first command-line argument
-print(locale.currency(sum_statement(sys.argv[1])))
+locale.setlocale(locale.LC_ALL, '')	# TODO(PM): Set locale to en_US?
+total = sum_statement(sys.argv[1])
+money = locale.currency(total, grouping=True)
+print(money)
