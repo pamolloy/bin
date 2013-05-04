@@ -1,8 +1,11 @@
-# NAME
+#!/usr/bin/env python
+#
 #   sum-statement.py - Print the sum of a credit card statement
 #
 # PURPOSE
-#   Calculate the sum of all transactions in a monthly credit card statement that is exported as a text file with the transaction amount delimited by "|" 
+#   Calculate the sum of all transactions in a monthly credit card statement
+#   that is exported as a text file with the transaction amount delimited by
+#   "|" 
 #
 # EXAMPLE
 #   python sum-statement.py 01-01-2013.txt
