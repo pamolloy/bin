@@ -12,10 +12,12 @@
 #
 # TODO
 #   Parse and export text file as JSON
+#	Represent currency using integers NOT floats
 #
 
 import sys
 import re
+import locale
 
 def sum_statement(fn):
     """Sum values delimited with the pipe character (i.e. "|")"""
@@ -35,5 +37,6 @@ def sum_statement(fn):
 
     return sum
 
+locale.setlocale(locale.LC_ALL, '')
 # Print the sum of the transaction amounts in the first command-line argument
-print(sum_statement(sys.argv[1]))
+print(locale.currency(sum_statement(sys.argv[1])))
