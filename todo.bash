@@ -15,8 +15,8 @@ ltd()
                 echo \## $FILE
                 # Print lines containing string
                 # and replace preceding text with nothing
-                # TODO(PM): Markdown newline requires two spaces at the EOL
-                grep "# TODO" $FILE | sed 's/^.*TODO//g'
+                # TODO(PM) Markdown newline requires two spaces at the EOL
+                grep "#\s*TODO" $FILE | sed 's/^.*TODO//g'
                 echo    # Print new line
             fi
         fi
