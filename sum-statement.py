@@ -20,14 +20,14 @@ def sum_statement(fn):
 
     sum = 0
 
-    # TODO(PM): Parse and export text file as JSON
+    # TODO(PM) Parse and export text file as JSON
     with open(fn,'r') as f:
         data = f.read()
     
     # Value between a "$" and "|"
     for value in re.findall('\$(.*?)\|', data):
         value = value.replace(",", "")  # Remove comma
-        # TODO(PM): Represent currency using integers NOT floats
+        # TODO(PM) Represent currency using integers NOT floats
         if value[0] != "-": # If positive value
             sum+=float(value)
         else:   # Handle negative value
@@ -35,7 +35,7 @@ def sum_statement(fn):
 
     return sum
 
-locale.setlocale(locale.LC_ALL, '')	# TODO(PM): Set locale to en_US?
+locale.setlocale(locale.LC_ALL, '')	# TODO(PM) Set locale to en_US?
 total = sum_statement(sys.argv[1])
 money = locale.currency(total, grouping=True)
 print(money)
