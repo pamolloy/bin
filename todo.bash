@@ -1,25 +1,36 @@
 #!/bin/bash
+#
+#   todo.bash - Find all TODO comments in specified files tracked by git
+#
 
-# DESCRIPTION
-#   Find all TODO comments in the Python source code files tracked by git
-
-LFE=".py"   # Programming language file extension
-LEN=3   # File extension length
-
-for FILE in $(git ls-files)
-do
-    if [ ${FILE: -$LEN} == $LFE ] # Check for source files
-    then
-        grep TODO $FILE >/dev/null
-        if [ $? -eq 0 ] # Check if file contains string
+ltd()
+{
+    for FILE in $(git ls-files)
+    do
+        if [ ${FILE: -$LEN} == $LFE ] # Check for source files
         then
-            echo \## $FILE
-            # Print lines containing string
-            # and replace preceding text with nothing
-            #TODO(PM) Markdown newline requires two spaces at the end
-            # of a line
-            grep TODO $FILE | sed 's/^.*TODO//g'
-            echo    # Print new line
+            grep TODO $FILE >/dev/null
+            if [ $? -eq 0 ] # Check if file contains string
+            then
+                echo \## $FILE
+                # Print lines containing string
+                # and replace preceding text with nothing
+                # TODO(PM): Markdown newline requires two spaces at the EOL
+                grep "# TODO" $FILE | sed 's/^.*TODO//g'
+                echo    # Print new line
+            fi
         fi
-    fi
-done
+    done
+}
+
+# Main control flow
+if [ -z "$1" ]
+then
+    echo WARNING: Please specify a file extension
+    exit 84
+else
+    LFE=$1   # Programming language file extension
+    LEN=${#LFE}   # File extension length
+    ltd
+fi
+
