@@ -10,7 +10,8 @@
 #
 
 shopt -s extglob	# TODO(PM): What if it was already on?
-touch tmp	# TODO(PM): What if it already exists?
+TMPFN=$(mktemp)
+touch $TMPFN
 
 # Compare the contents of two directories and write into TMP
 comm -12 <(cd $1 && find | sort) <(cd $2 && find | sort) > tmp
@@ -26,5 +27,5 @@ while read line; do
 	fi
 done < tmp
 
-rm tmp	# TODO(PM): What if it already existed?
+rm $TMPFN
 shopt -u extglob	# TODO(PM): What if it was already on?
