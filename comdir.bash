@@ -9,6 +9,12 @@
 #	files then print the line.
 #
 
+if [[ $# -ne 2 ]]
+then
+    echo WARNING: Please specify two arguments
+    exit 84
+fi
+
 shopt -s extglob	# TODO(PM): What if it was already on?
 TMPFN=$(mktemp)
 touch $TMPFN
