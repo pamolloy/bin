@@ -10,6 +10,11 @@
 #   Rename a photo to the datetime it was taken formatted as seconds since the
 #   Epoch
 #
+# EXAMPLE
+#   Rename more than one file using a wildcard
+#
+#       $ rename-photo.bash *.jpg
+#
 
 for FILE in "$@"; do
     LINE=$(identify -verbose "$FILE" | grep "DateTime:")
