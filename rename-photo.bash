@@ -18,16 +18,20 @@
 
 for FILE in "$@"; do
     LINE=$(identify -verbose "$FILE" | grep "DateTime:")
-    IFS=$' '
-    read -a ARRAY <<< "${LINE:4}"   # Split on ` ` and remove first 4 chars
-    DATE="${ARRAY[1]}"
-    TIME="${ARRAY[2]}"
-    IFS=$':'
-    read -a ARRAY <<< "${DATE}"
-    YEAR="${ARRAY[0]}"
-    MONTH="${ARRAY[1]}"
-    DAY="${ARRAY[2]}"
-    EPOCH="$(date --date="$MONTH/$DAY/$YEAR $TIME" "+%s")"
-    EXTENSION="${FILE##*.}"
-    mv $FILE "$EPOCH.$EXTENSION"
+    if [ -z "$LINE" ]; then
+        echo ERROR: Datetime not found in $FILE
+    else
+        IFS=$' '
+        read -a ARRAY <<< "${LINE:4}"   # Split on ` ` and remove first 4 chars
+        DATE="${ARRAY[1]}"
+        TIME="${ARRAY[2]}"
+        IFS=$':'
+        read -a ARRAY <<< "${DATE}"
+        YEAR="${ARRAY[0]}"
+        MONTH="${ARRAY[1]}"
+        DAY="${ARRAY[2]}"
+        EPOCH="$(date --date="$MONTH/$DAY/$YEAR $TIME" "+%s")"
+        EXTENSION="${FILE##*.}"
+        mv $FILE "$EPOCH.$EXTENSION"
+    fi
 done
