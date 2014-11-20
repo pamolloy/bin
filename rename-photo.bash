@@ -16,6 +16,24 @@
 #       $ rename-photo.bash *.jpg
 #
 
+safe_mv() {
+    echo Moving $1 to $2
+    if [ -e "$2" ]; then
+        echo WARNING: Attempted to overwrite $2
+        local NAME="${2%.*}"
+        # TODO(PM): Support numbers with more than one digit
+        if [ "${NAME: -2: -1}" == "-" ]; then
+            local NUM="${NAME: -1}" + 1
+            local ITERFILENAME="${NAME: 0: -1}"$NUM$EXTENSION
+            safe_mv $1 $ITERFILENAME$NAME$EXTENSION
+        else
+           safe_mv $1 $NAME-1.$EXTENSION
+        fi
+    else
+        mv $1 $2
+    fi
+}
+
 for FILENAME in "$@"; do
     echo Processing $FILENAME
     LINE=$(identify -verbose "$FILENAME" | grep "DateTime:")
@@ -42,6 +60,7 @@ for FILENAME in "$@"; do
         if [ -z "$DAY" ]; then echo ERROR: Day not found in $FILENAME; break; fi
         EPOCH="$(date --date="$MONTH/$DAY/$YEAR $TIME" "+%s")"
         EXTENSION="${FILENAME##*.}"
-        mv $FILE "$EPOCH.$EXTENSION"
+        NEWFILENAME="$EPOCH.$EXTENSION"
+        safe_mv $FILENAME $NEWFILENAME
     fi
 done
