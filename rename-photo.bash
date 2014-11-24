@@ -45,8 +45,8 @@ for FILENAME in "$@"; do
         read -a ARRAY <<< "${LINE:4}"   # Split on ` ` and remove first 4 chars
         DATE="${ARRAY[1]}"
         TIME="${ARRAY[2]}"
-        if [ -z "$TIME" ]; then echo ERROR: Time not found in $FILENAME; break; fi
         echo Time: $TIME
+        if [ -z "$TIME" ]; then echo ERROR: Time not found in $FILENAME; break; fi
         IFS=$':'
         read -a ARRAY <<< "${DATE}"
         YEAR="${ARRAY[0]}"
