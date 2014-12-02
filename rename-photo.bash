@@ -59,6 +59,7 @@ for FILENAME in "$@"; do
         echo Day: $DAY
         if [ -z "$DAY" ]; then echo ERROR: Day not found in $FILENAME; continue; fi
         EPOCH="$(date --date="$MONTH/$DAY/$YEAR $TIME" "+%s")"
+        if [ -z "$EPOCH" ]; then echo ERROR: Invalid date found in $FILENAME; continue; fi
         EXTENSION="${FILENAME##*.}"
         NEWFILENAME="$EPOCH.$EXTENSION"
         safe_mv $FILENAME $NEWFILENAME
