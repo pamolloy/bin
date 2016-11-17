@@ -11,10 +11,14 @@ EXERCISES=(
     "Push-up"
     "Crunch"
     "Squat"
+    "Glute bridge"
     "Triceps dip"
+    "Star plank"
+    "Bicycle crunch"
+    "Diamond push-up"
+    "Prone back extension"
     "Plank"
     "Lunge"
-    "Push-up and rotation"
     "Side plank left"
     "Side plank right"
 )
@@ -27,9 +31,10 @@ for EXERCISE in "${EXERCISES[@]}"; do
     sleep 10
     espeak start
     sleep 35
-    espeak "10 seconds"
-    sleep 5
-    speak "5 seconds"
+    espeak "10 seconds" # real time 1.14s
+    sleep 4
+    espeak "5 seconds"  # real time 1.14s
+    sleep 4
     espeak stop
     sleep 1
 done
@@ -37,5 +42,5 @@ done
 espeak "Good job human"
 
 echo "$(date +%Y%m%d) Completed 1 circuit" >> ~/.pal/exercise.pal
-pal # Display recent activity
+pal -r 90-1     # Display recent activity
 
